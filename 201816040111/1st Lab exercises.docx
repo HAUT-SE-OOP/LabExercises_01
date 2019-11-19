@@ -1,0 +1,1131 @@
+Lab Exercises
+Class:    1801    			Name:   朴圣源   		StuID:__201816040111__
+Date:    2019/11/09    			Score:                      		
+Lab Exercise 1 — Modifying Class Account
+
+I  Lab Objectives
+In this lab, you will practice:
+	Creating member functions.
+	Invoking functions and receiving return values from functions.
+	Testing a condition using an if statement.
+	Outputting variables with stream insertion and the cout object.
+
+II  Description of the Problem
+Modify class Account to provide a member function called debit that withdraws money from an Account. Ensure that the debit amount does not exceed the Account’s balance. If it does, the balance should be left unchanged and the function should print a message indicating "Debit amount exceeded account balance." Modify class AccountTest to test member function debit.
+
+III  Sample Output
+ 
+IV  Your Solution
+// Lab 1: Account.h
+// Definition of Account class.
+
+class Account
+{
+public:
+   Account( int ); // constructor initializes balance
+   void credit( int ); // add an amount to the account balance
+   void debit(int);/* write code to declare member function debit. */
+   int getBalance(); // return the account balance
+private:
+   int balance; // data member that stores the balance
+}; // end class Account
+
+// Lab 1: Account.cpp
+// Member-function definitions for class Account.
+#include <iostream>
+using namespace std;
+
+#include "Account.h" // include definition of class Account
+
+// Account constructor initializes data member balance
+Account::Account( int initialBalance )
+{
+   balance = 0; // assume that the balance begins at 0
+
+   // if initialBalance is greater than 0, set this value as the
+   // balance of the Account; otherwise, balance remains 0
+   if ( initialBalance > 0 )
+      balance = initialBalance;
+
+   // if initialBalance is negative, print error message
+   if ( initialBalance < 0 )
+      cout << "Error: Initial balance cannot be negative.\n" << endl;
+} // end Account constructor
+
+// credit (add) an amount to the account balance
+void Account::credit( int amount )
+{
+   balance = balance + amount; // add amount to balance
+} // end function credit
+
+/* write code to define member function debit. */
+void Account::debit(int wdamount)
+{
+    /*Determine if the loan is greater than the deposit*/
+    if(wdamount>balance)
+        cout<<"Debit amount exceeded account balance\n"<<endl;
+    else
+        balance = balance - wdamount;
+}
+// return the account balance
+int Account::getBalance()
+{
+   return balance; // gives the value of balance to the calling function
+} // end function getBalance
+
+// Lab 1: AccountTest.cpp
+// Create and manipulate Account objects.
+#include <iostream>
+using namespace std;
+
+// include definition of class Account from Account.h
+#include "Account.h"
+
+// function main begins program execution
+int main()
+{
+   Account account1( 799 ); // create Account object
+   Account account2( 0 ); // create Account object
+
+   // display initial balance of each object
+   cout << "account1 balance: $" << account1.getBalance() << endl;
+   cout << "account2 balance: $" << account2.getBalance() << endl;
+
+   account1.credit( -114 );
+   cout << "account1 balance: $" << account1.getBalance() << endl;
+
+   int withdrawalAmount; // stores withdrawal amount read from user
+
+   cout << "\nEnter withdrawal amount for account1: "; // prompt
+   cin >> withdrawalAmount; // obtain user input
+   cout << "\nsubtracting " << withdrawalAmount
+      << " from account1 balance\n\n";
+   /* write code to withdraw money from account1 */
+    account1.debit(withdrawalAmount);
+   // display balances
+   cout << "account1 balance: $" << account1.getBalance() << endl;
+   cout << "account2 balance: $" << account2.getBalance() << endl;
+
+   cout << "\nEnter withdrawal amount for account2: "; // prompt
+   cin >> withdrawalAmount; // obtain user input
+   cout << "\nsubtracting " << withdrawalAmount
+      << " from account2 balance\n\n";
+   /* write code to withdraw money from account2 */
+    account2.debit(withdrawalAmount);
+   // display balances
+   cout << "account1 balance: $" << account1.getBalance() << endl;
+   cout << "account2 balance: $" << account2.getBalance() << endl;
+} // end main
+ 
+ 
+ 
+ 
+Lab Exercise 2 — Modifying class GradeBook
+
+I  Lab Objectives
+In this lab, you will practice:
+	Declaring a data member.
+	Providing set and get functions to manipulate a data member’s value.
+	Declaring member functions with parameters.
+
+II  Description of the Problem
+Modify class GradeBook. Include a second string data member that represents the name of the course’s instructor. Provide a set function to change the instructor’s name and a get function to retrieve it. Modify the constructor to specify two parameters—one for the course name and one for the instructor’s name. Modify member function displayMessage such that it first outputs the welcome message and course name, then outputs "This course is presented by: " followed by the instructor’s name. Modify the test application to demonstrate the class’s new capabilities.
+
+III  Sample Output
+ 
+ 
+IV   Your Solution
+// Lab 2: GradeBook.h
+// Definition of GradeBook class that stores an instructor's name.
+#include <string> // program uses C++ standard string class
+using namespace std;
+
+// GradeBook class definition
+class GradeBook
+{
+public:
+   // constructor initializes course name and instructor name
+   GradeBook( string, string );
+   void setCourseName( string ); // function to set the course name
+   string getCourseName(); // function to retrieve the course name
+   /* write code to declare a get function for the instructor's name */
+   void setInstructorName( string );
+   /* write code to declare a set function for the instructor's name */
+   string getInstructorName();
+   void displayMessage(); // display welcome message and instructor name
+private:
+   string courseName; // course name for this GradeBook
+   string instructorName; // instructor name for this GradeBook
+}; // end class GradeBook
+
+// Lab 2: GradeBook.cpp
+// Member-function definitions for class GradeBook.
+#include <iostream>
+using namespace std;
+
+// include definition of class GradeBook from GradeBook.h
+#include "GradeBook.h"
+
+// constructor initializes courseName and instructorName
+// with strings supplied as arguments
+GradeBook::GradeBook( string course, string instructor )
+{
+   setCourseName( course ); // initializes courseName
+   setInstructorName( instructor ); // initialiZes instructorName
+} // end GradeBook constructor
+
+// function to set the course name
+void GradeBook::setCourseName( string name )
+{
+   courseName = name; // store the course name
+} // end function setCourseName
+
+// function to retrieve the course name
+string GradeBook::getCourseName()
+{
+   return courseName;
+} // end function getCourseName
+
+/* write code to define a get member function for the instructor's name */
+void GradeBook::setInstructorName( string instructor)
+{
+    instructorName = instructor;
+}
+/* write code to define a set member function for the instructor's name */
+string GradeBook::getInstructorName()
+{
+    return instructorName;
+}
+// display a welcome message and the instructor's name
+void GradeBook::displayMessage()
+{
+   // display a welcome message containing the course name
+   cout << "Welcome to the grade book for\n" << getCourseName() << "!"
+      << endl<<"This course is presented by: "<<getInstructorName()<<endl<<endl;
+   /* write code to output the instructor's name */
+} // end function displayMessage
+
+// Lab 2: GradeBookTest.cpp
+// Test program for modified GradeBook class.
+#include <iostream>
+#include <string>
+using namespace std;
+
+// include definition of class GradeBook from GradeBook.h
+#include "GradeBook.h"
+
+// function main begins program execution
+int main()
+{
+   // create a GradeBook object; pass a course name and instructor name
+   string Tname;
+   GradeBook gradeBook(
+      "CS101 Introduction to C++ Programming" , "Sam Smith" );
+
+   // display welcome message and instructor's name
+   gradeBook.displayMessage();
+
+   /* write code to change instructor's name and output changes */
+   cout<<"Changing instructor name to ";
+    getline(cin,Tname);
+    cout<<endl;
+    GradeBook gradeBook1(
+      "CS101 Introduction to C++ Programming",Tname);i
+    gradeBook1.displayMessage();
+} // end main
+ 
+ 
+Lab Exercise 3 — Creating an Employee Class
+
+I  Lab Objectives
+In this lab, you will practice:
+	Creating a class definition.
+	Declaring data members.
+	Defining a constructor.
+	Defining set and get functions.
+	Writing a test application to demonstrate the capabilities of another class.
+
+II  Description of the Problem
+Create a class called Employee that includes three pieces of information as data members—a first name (type string), a last name (type string) and a monthly salary (type int). Your class should have a constructor that initializes the three data members. Provide a set and a get function for each data member. If the monthly salary is not positive, set it to 0. Write a test program that demonstrates class Employee’s capabilities. Create two Employee objects and display each object’s yearly salary. Then give each Employee a 10 percent raise and display each Employee’s yearly salary again.
+ 
+III  Sample Output
+ 
+ 
+IV   Your Solution
+// Lab 3: Employee.h
+// Employee class definition.
+
+#include <string> // program uses C++ standard string class
+using namespace std;
+
+// Employee class definition
+class Employee
+{
+public:
+   /* Declare a constructor that has one parameter for each data member */
+   explicit Employee (string,string,int);
+   /* Declare a set method for the employee's first name */
+   void setFirstName(string);
+   /* Declare a get method for the employee's first name */
+   void setLastName(string);
+   /* Declare a set method for the employee's last name */
+   void setMonthlySalary(int);
+   /* Declare a get method for the employee's last name */
+   string getFirstName() const;
+   /* Declare a set method for the employee's monthly salary */
+   string getLastName() const;
+   /* Declare a get method for the employee's monthly salary */
+   int getMonthlySalary() const;
+private:
+   /* Declare a string data member for the employee's first name */
+   string firstname;
+   /* Declare a string data member for the employee's last name */
+   string lastname;
+   /* Declare an int data member for the employee's monthly salary */
+   int monthlysalary;
+}; // end class Employee
+ 
+// Lab 3: Employee.cpp
+// Employee class member-function definitions.
+#include <iostream>
+using namespace std;
+
+#include "Employee.h" // Employee class definition
+
+/* Define the constructor. Assign each parameter value to the appropriate data
+   member. Write code that validates the value of salary to ensure that it is
+   not negative. */
+   Employee::Employee (string fname,string lname,int salary)
+   :firstname(fname),lastname(lname),monthlysalary(salary)
+   {
+
+   }
+
+/* Define a set function for the first name data member. */
+void Employee::setFirstName(string fname)
+{
+    firstname = fname;
+}
+/* Define a get function for the first name data member. */
+string Employee::getFirstName() const
+{
+    return firstname;
+}
+/* Define a set function for the last name data member. */
+void Employee::setLastName(string lname)
+{
+    lastname = lname;
+}
+/* Define a get function for the last name data member. */
+string Employee::getLastName() const
+{
+    return lastname;
+}
+/* Define a set function for the monthly salary data member. Write code
+   that validates the salary to ensure that it is not negative. */
+void Employee::setMonthlySalary(int salary)
+{
+    if(salary < 0)
+        monthlysalary = 0;
+    else
+        monthlysalary = salary;
+}
+/* Define a get function for the monthly salary data member. */
+int Employee::getMonthlySalary() const
+{
+    return monthlysalary;
+}
+
+ 
+// Lab 3: EmployeeTest.cpp
+// Create and manipulate two Employee objects.
+#include <iostream>
+using namespace std;
+
+#include "Employee.h" // include definition of class Employee
+
+// function main begins program execution
+int main()
+{   int a = 2875,b = 3150;
+   /* Create two Employee objects and assign them to Employee variables. */
+    Employee employ1("Bob","Jones",a),employ2("Susan","baker",b);
+
+   /* Output the first name, last name and salary for each Employee. */
+    cout<<"Employee 1: "<<employ1.getFirstName()<<" "<<employ1.getLastName()<<";"<<"Yearly Salary: "<<employ1.getMonthlySalary()*12
+    <<endl<<"Employee 2: "<<employ2.getFirstName()<<" "<<employ2.getLastName()<<";"<<"Yearly Salary: "<<employ2.getMonthlySalary()*12<<endl<<endl;
+   /* Give each Employee a 10% raise. */
+    cout<<"Increasing employee salaries by 10%"<<endl;
+   /* Output the first name, last name and salary of each Employee again. */
+   employ1.setMonthlySalary(a*1.1);
+   employ2.setMonthlySalary(b*1.1);
+    cout<<"Employee 1: "<<employ1.getFirstName()<<" "<<employ1.getLastName()<<";"<<"Yearly Salary: "<<employ1.getMonthlySalary()*12
+    <<endl<<"Employee 2: "<<employ2.getFirstName()<<" "<<employ2.getLastName()<<";"<<"Yearly Salary: "<<employ2.getMonthlySalary()*12<<endl<<endl;
+} // end main
+ 
+ 
+Lab Exercise 4 — Complex Numbers
+
+I  Lab Objectives
+In this lab, you will practice:
+	Creating new data types by writing class definitions.
+	Defining member functions of programmer-defined classes.
+	Instantiating objects from programmer-defined classes.
+	Calling member functions of programmer-defined classes.
+The follow-up questions and activities will also give you practice:
+	Initializing programmer-defined class data members with class constructors.
+
+II  Description of the Problem
+Create a class called Complex for performing arithmetic with complex numbers. Write a program to test your class. 
+Complex numbers have the form：
+realPart + imaginaryPart * i
+where i is
+√(-1)
+Use double variables to represent the private data of the class. Provide a constructor that enables an object of this class to be initialized when it is declared. The constructor should contain default values in case no initializers are provided. Provide public member functions that perform the following tasks:
+1) Adding two Complex numbers: The real parts are added together and the imaginary parts are added together.
+2) Subtracting two Complex numbers: The real part of the right operand is subtracted from the real part of the left operand and the imaginary part of the right operand is subtracted from the imaginary part of the left operand.
+3) Printing Complex numbers in the form (a, b) where a is the real part and b is the imaginary part.
+
+III  Sample Output
+ 
+ 
+IV   Your Solution
+// Lab 4: Complex.h
+#ifndef COMPLEX_H
+#define COMPLEX_H
+
+/* Write class definition for Complex */
+class Complex
+{
+public:
+    Complex( double = 0,double = 0 );//Define default values for constructors
+    Complex add( const Complex& );
+    Complex subtract( const Complex& );
+    void printComplex();
+    void setComplexNumber( double, double );
+private:
+    double realPart;
+    double imaginaryPart;
+};
+#endif
+
+// Lab 4: Complex.cpp
+// Member-function definitions for class Complex.
+#include <iostream>
+using namespace std;
+
+#include "Complex.h"
+
+Complex::Complex( double real, double imaginary )
+{
+   setComplexNumber( real, imaginary );
+} // end Complex constructor
+
+Complex Complex::add( const Complex &right )
+{
+   /* Write a statement to return a Complex object. Add
+      the realPart of right to the realPart of this Complex
+      object and add the imaginaryPart of right to the
+      imaginaryPart of this Complex object */
+      realPart = right.realPart + realPart;
+      imaginaryPart = right.imaginaryPart + imaginaryPart;
+      return *this;//Returns the address of the current object
+} // end function add
+
+Complex Complex::subtract( const Complex &right )
+{
+   /* Write a statement to return a Complex object. Subtract
+      the realPart of right from the realPart of this Complex
+      object and subtract the imaginaryPart of right from
+      the imaginaryPart of this Complex object */
+      realPart = realPart - right.realPart;
+      imaginaryPart =  imaginaryPart - right.imaginaryPart;
+      return *this;//Returns the address of the current object
+} // end function subtract
+
+void Complex::printComplex()
+{
+   cout << '(' << realPart << ", " << imaginaryPart << ')';
+} // end function printComplex
+
+void Complex::setComplexNumber( double rp, double ip )
+{
+   realPart = rp;
+   imaginaryPart = ip;
+} // end function setComplexNumber
+
+// Lab 4: ComplexTest.cpp
+#include <iostream>
+using namespace std;
+
+#include "Complex.h"
+
+int main()
+{
+    Complex a( 1, 7 ), b( 9, 2 ), c; // create three Complex objects
+
+    a.printComplex(); // output object a
+    cout << " + ";
+    b.printComplex(); // output object b
+    cout << " = ";
+    c = a.add( b ); // invoke add function and assign to object
+    c.printComplex(); // output object c
+
+    cout << '\n';
+    a.setComplexNumber( 10, 1 ); // reset realPart and
+    b.setComplexNumber( 11, 5 ); // and imaginaryPart
+    a.printComplex(); // output object a
+    cout << " - ";
+    b.printComplex(); // output object b
+    cout << " = ";
+    c = a.subtract( b ); // invoke add function and assign to object c
+    c.printComplex(); // output object c
+    cout << endl;
+} // end main
+
+ 
+ 
+V  Follow-Up Questions and Activities
+	Why do you think const was used in the parameter list of add and subtract?
+	Can add and subtract’s parameters be passed by value instead of by reference? How might this affect the design of class Complex? Write a new class definition that illustrates how the parameters would be passed by value.
+	Declare a Complex number, as follows, without passing any arguments to the constructor. What happens?Does the default constructor get called?
+Complex a;
+1)Because the class of Complex cannot be changed
+2)
+public:
+    Complex( double = 0,double = 0 );//Define default values for constructors
+    void printComplex();
+    void setComplexNumber( double, double );
+    double getRealPart();
+double getImaginaryPart();
+Remove the add function and the subtract function in the definition of the class.And return the value of realpart and imaginarypart in getRealPart and getImaginaryPart function.
+
+In the Complextext,,
+Complex c(a.getRealPart()+b.getRealPart() , a.getImaginaryPart() + b.getImaginaryPart() );
+
+Calculate the addition and subtraction of the imaginary part of the real part by passing the constructor of c to the real part of the real part returned by the objects a and b.
+3)
+	It will call the initial value of the constructor.The default constructor get called.
+ 
+Lab Exercise 5 — Dates
+
+I  Lab Objectives
+In this lab, you will practice:
+	Using access functions and utility functions so that it is not necessary for non-member functions to be able to access a class’ data members.
+The follow-up questions and activities also will give you practice:
+	Overloading constructors and using default arguments with constructors.
+	Defining a destructor.
+
+II  Description of the Problem
+Modify the Date class to provide a member function nextDay to increment the day by one. The Date object should always remain in a consistent state. Write a program that tests function nextDay in a loop that prints the date during each iteration to illustrate that the nextDay function works correctly. Be sure to test the following cases:
+	Incrementing into the next month.
+	Incrementing into the next year.
+
+III  Sample Output
+ 
+
+IV  Your Solution
+// Lab 5: Date.h
+#ifndef DATE_H
+#define DATE_H
+
+class Date
+{
+public:
+   Date( int = 1, int = 1, int = 2000 ); // default constructor
+   void print(); // print function
+   void setDate( int, int, int ); // set month, day, year
+   void setMonth( int ); // set month
+   void setDay( int ); // set day
+   void setYear( int ); // set year
+   int getMonth(); // get month
+   int getDay(); // get day
+   int getYear(); // get year
+   /* Write a member function prototype for nextDay,
+      which will increment the Date by one day */
+    void NextDay();//Calculate the next day
+private:
+   int month; // 1-12
+   int day; // 1-31 (except February(leap year), April, June, Sept, Nov)
+   int year; // 1900+
+   bool leapYear(); // leap year
+   int monthDays(); // days in month
+}; // end class Date
+
+#endif
+
+// Lab 5: Date.cpp
+// Member-function definitions for class Date.
+#include <iostream>
+using namespace std;
+
+#include "Date.h" // include definition of class Date
+
+Date::Date( int m, int d, int y )
+{
+    setDate( m, d, y ); // sets date
+} // end Date constructor
+
+void Date::setDate( int mo, int dy, int yr )
+{
+    setMonth( mo ); // invokes function setMonth
+    setDay( dy ); // invokes function setDay
+    setYear( yr ); // invokes function setYear
+} // end function setDate
+
+void Date::setDay( int d )
+{
+    if ( month == 2 && leapYear() )
+        day = ( d <= 29 && d >= 1 ) ? d : 1;
+    else
+        day = ( d <= monthDays() && d >= 1 ) ? d : 1;
+} // end function setDay
+
+void Date::setMonth( int m )
+{
+    month = m <= 12 && m >= 1 ? m : 1; // sets month
+} // end function setMonth
+
+void Date::setYear( int y )
+{
+    year = y >= 1900 ? y : 1900; // sets year
+} // end function setYear
+
+int Date::getDay()
+{
+    return day;
+} // end function getDay
+
+int Date::getMonth()
+{
+    return month;
+} // end function getMonth
+
+int Date::getYear()
+{
+    return year;
+} // end function getYear
+
+void Date::print()
+{
+    cout << month << '-' << day << '-' << year << '\n'; // outputs date
+} // end function print
+
+/* Write code to define member function nextDay;
+   make sure to check if the new day is the start of
+   a new month or a new year */
+void Date::NextDay()
+{
+    this->day++; //Increase the number of days
+    if(this->day > monthDays()) //The number of days is greater than the number of days in the month
+    {
+        this->day = 1;//Initialize the number of days
+        this->month++;//Enter the next month
+    }
+    if(this->month == 13 || this->day == 32)//When it is over December, enter the next year
+        {
+            this->month = 1;//Initialize the number of months
+            this->day = 1;//Initialize the number of days
+            this->year++;//Enter the next year
+        }
+}
+
+bool Date::leapYear()
+{
+    if ( getYear() % 400 == 0 || ( getYear() % 4 == 0 && getYear() % 100 != 0 ) )
+        return true; // is a leap year
+    else
+        return false; // is not a leap year
+} // end function leapYear
+
+int Date::monthDays()
+{
+    const int days[ 12 ] =
+    { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+    return getMonth() == 2 && leapYear() ? 29 : days[ getMonth() - 1 ];
+} // end function monthDays
+
+// Lab 5: DateTest.cpp
+#include <iostream>
+using namespace std;
+
+#include "Date.h" // include definitions of class Date
+
+int main()
+{
+   const int MAXDAYS = 16;
+   Date d( 12, 24, 2004 ); // instantiate object d of class Date
+
+   // output Date object d's value
+   for ( int loop = 1; loop <= MAXDAYS; ++loop )
+   {
+
+      d.print(); // invokes function print
+      /* Write call to nextDay */
+      d.NextDay();//print the next day
+   } // end for
+
+   cout << endl;
+} // end main
+
+ 
+ 
+V  Follow-Up Questions and Activities
+	The Date class has only one constructor. Is it possible to have more than one constructor?
+	What happens when a member function that takes no arguments is called without the parentheses (i.e.,dateObject.nextDay)?
+	Write a destructor for the Date class. The destructor should print text indicating that the destructor for the Date class was called successfully.
+	In main, try to change d’s year to 2003 using an assignment statement. Do not call function setYear. What happens? Are you able to change the value?
+1)Yes.It is possible to have more than one constructor.
+2)It will call the initial value of the constructor.month = 12,day = 24,year = 2004.
+3)Date::~Date()
+{
+    cout << "destructor runs";
+}
+4)
+  
+The value of year is so crzay.
+Ahahaha!!!
+I can’t handle the value if I don’t call to function setYear.Beacuse this program can not find the value of year.
+ 
+
+Lab Exercise 6 — Simple Calculator
+
+I  Lab Objectives
+In this lab, you will practice:
+	Using classes to create a data type Simple Calculator capable of performing arithmetic operations.
+	Creating const member functions to enforce the principle of least privilege.
+The follow-up questions and activities also will give you practice:
+	Using constructors to specify initial values for data members of a programmer-defined class.
+
+II  Description of the Problem
+Write a SimpleCalculator class that has public methods for adding, subtracting, multiplying and dividing two doubles. A sample call is as follows:
+double answer = sc.add( a, b );
+Object sc is of type SimpleCalculator. Member function add returns the result of adding its two arguments.
+
+III  Sample Output
+ 
+ 
+IV   Your Solution
+// Lab Exercise 6: SimpleCalculator.h
+
+// class SimpleCalculator definition
+class SimpleCalculator
+{
+public:
+    //SimpleCalculator SimpleCalculator(double,double);
+   /* Write prototype for add member function */
+   double add(double,double) ; //A function to add
+   double subtract( double, double ) const;
+   double multiply( double, double ) const;
+   /* Write prototype for divide member function */
+   double divide(double,double) ;//A function to divide
+/*private:
+    double addition;
+    double subtraction;
+    double multiplication;
+    double division;*/
+}; // end class SimpleCalculator
+
+// Lab Exercise 6: SimpleCalculator.cpp
+
+#include "SimpleCalculator.h"
+
+/*SimpleCalculator::SimpleCalculator(double a,double b)
+{
+    add(a,b);
+    subtract(a,b);
+    multiply(a,b);
+    divide(a,b);
+}*/
+/* Write definition for add member function */
+double SimpleCalculator::add(double a, double b)
+{
+    return a + b;
+}
+// function subtract definition
+double SimpleCalculator::subtract( double a, double b ) const
+{
+   return a - b;
+} // end function subtract
+
+// function multiply definition
+double SimpleCalculator::multiply( double a, double b ) const
+{
+   return a * b;
+} // end function multiply
+
+/* Write definition for divide member function */
+double SimpleCalculator::divide(double a, double b)
+{
+    return a / b;
+}
+
+// Lab Exercise 6: CalcTest.cpp
+
+#include <iostream>
+using namespace std;
+
+#include "SimpleCalculator.h"
+
+int main()
+{
+
+   double a = 10.0;
+   double b = 20.0;
+   SimpleCalculator sc;
+   /* Instantiate an object of type Simplecalculator */
+   cout << "The value of a is: " << a << "\n";
+   cout << "The value of b is: " << b << "\n\n";
+
+   /* Write a line that adds a and b through your SimpleCalculator
+      object; assign the result to a variable named addition */
+
+   double addition = sc.add(a,b);
+   cout << "Adding a and b yields " << addition << "\n";
+
+   double subtraction = sc.subtract( a, b );
+   cout << "Subtracting b from a yields " << subtraction << "\n";
+
+   double multiplication = sc.multiply( a, b );
+   cout << "Multiplying a by b yields " << multiplication << "\n";
+
+   /* Write a line that divides a and b through the
+      SimpleCalculator object; assign the result to a
+	  variable named division */
+	  double division = sc.divide( a , b );
+   cout << "Dividing a by b yields " << division << endl;
+}
+
+ 
+ 
+V  Follow-Up Questions and Activities
+	Why doesn’t the SimpleCalculator class have a constructor?
+	Why are no private data members needed for class SimpleCalculator?
+	Modify your class so that SimpleCalculator has a private data member called answer. After performing an operation, assign the result to answer. Add a member function named getAnswer to retrieve the result of the last arithmetic operation performed by the object. Also, add a constructor for class SimpleCalculator that initializes the value of answer to 0.
+	Modify the program so that the SimpleCalculator class has an input member function that allows the user to input two doubles. The function should then store the values that were input in private data members. Use these two values for each of the arithmetic calculations. Create two constructors for this class, one that takes no arguments and initializes a and b to 0 and another that takes two doubles and initializes a and b to those values. Finally, create a member function printValues that displays the values of a and b. A segment of the driver program might now look like this:
+ 
+1)Because the data can be run without initialization.
+2)Because “return” can return the required value.
+3)class SimpleCalculator
+{
+public:
+    SimpleCalculator(double = 0);
+   /* Write prototype for add member function */
+   void add(double,double) ; //A function to add
+   void subtract( double, double ) ;
+   void multiply( double, double ) ;
+   /* Write prototype for divide member function */
+   void divide(double,double) ;//A function to divide
+   double getAnswer();
+private:
+double answer;
+}
+sc.add(a,b);
+   cout << "Adding a and b yields " << sc.getAnswer()<< "\n";
+
+   sc1.subtract( a, b );
+   cout << "Subtracting b from a yields " << sc1.getAnswer() << "\n";
+
+   sc2.multiply( a, b );
+   cout << "Multiplying a by b yields " << sc2.getAnswer() << "\n";
+	sc3.divide( a , b );
+   cout << "Dividing a by b yields " << sc3.getAnswer() << endl;
+double SimpleCalculator::getAnswer()
+{
+    return answer;
+}
+
+4)
+class SimpleCalculator
+{
+public:
+    SimpleCalculator();
+    SimpleCalculator(double,double);
+   void input();
+   void printValues();
+    double add();
+private:
+    double a;
+    double b;
+};
+#include "SimpleCalculator.h"
+#include <iostream>
+
+using namespace std;
+
+SimpleCalculator::SimpleCalculator()
+{
+   a = 0;
+   b = 0;
+}
+
+SimpleCalculator::SimpleCalculator(double m , double n)
+:a(m),b(n)
+{
+    
+}
+void SimpleCalculator::input()
+{
+   cin>>a>>b;
+}
+void SimpleCalculator::printValues()
+{
+    cout<<a<<"  "<<b;
+}
+double SimpleCalculator::add()
+{
+    return a + b;
+}
+
+#include <iostream>
+using namespace std;
+
+#include "SimpleCalculator.h"
+
+int main()
+{
+SimpleCalculator sc;
+sc.input();
+sc.printValues();
+cout << "Adding a and b yields"<<sc.add()<<"\n";
+} 
+
+*Lab Exercise 7 — Integer Set
+
+I  Lab Objectives
+In this lab, you will practice:
+	Using classes to create a data type, IntegerSet, capable of storing a set of integers
+	Using dynamic memory allocation with the new and delete operators
+The follow-up questions and activities also will give you practice:
+	Using destructors to deallocate memory that was dynamically allocated.
+
+II  Description of the Problem
+Create class IntegerSet for which each object can hold integers in the range 0 through 100. A set is represented internally as an array of ones and zeros. Array element a[ i ] is 1 if integer i is in the set. Array element a[ j ] is 0 if integer j is not in the set. The default constructor initializes a set to the so-called “empty-set,” i.e., a set whose array representation contains all zeros. 
+Provide member functions for the common set operations. For example, a unionOfSets member function (already provided) creates a third set that is the set-theoretic union of two existing sets (i.e., an element of the third array’s is set to 1 if that element is 1 in either or both of the existing sets, and an element of the third set’s array is set to 0 if that element is 0 in each of the existing sets).
+Provide an intersectionOfSets member function which creates a third set which is the set-theoretic intersection of two existing sets (i.e., an element of the third set’s array is set to 0 if that element is 0 in either or both of the existing sets, and an element of the third set’s array is set to 1 if that element is 1 in each of the existing sets).
+An insertElement member function (already provided) inserts a new integer k into a set (by setting a[ k ] to 1 ). Provide a deleteElement member function that deletes integer m (by setting a[ m ] to 0 ). 
+A printSet member function (already provided) prints a set as a list of numbers separated by spaces. Print only those elements which are present in the set (i.e., their position in the array has a value of 1 ). Print --- for an empty set. 
+Provide an isEqualTo member function that determines whether two sets are equal.
+Provide an additional constructor that receives an array of integers and the size of that array and uses the array to initialize a set object.
+Now write a driver program to test your IntegerSet class. Instantiate several IntegerSet objects. Test that all your member functions work properly.
+
+III  Sample Output
+ 
+ 
+IV   Your Solution
+// Lab 7: IntegerSet.h
+// Header file for class IntegerSet
+#ifndef INTEGER_SET_H
+#define INTEGER_SET_H
+
+class IntegerSet
+{
+public:
+   // default constructor
+   IntegerSet()
+   {
+      /* Write call to emptySet */
+      emptySet();//call function to emptySet
+   } // end IntegerSet constructor
+
+   IntegerSet( int [], int ); // constructor that takes an initial set
+   IntegerSet unionOfSets( const IntegerSet& );
+   /* Write a member funcion prototype for intersectionOfSets */
+   IntegerSet intersectionOfSets( const IntegerSet& );
+   void emptySet(); // set all elements of set to 0
+   void inputSet(); // read values from user
+   void insertElement( int );
+   /* Write a member function prototype for deleteElement */
+   void deleteElement( int );
+   void printSet() const;
+   /* Write a member function prototype for isEqualTo */
+   bool isEqualTo( const IntegerSet& ) const;
+private:
+   int set[ 101 ]; // range of 0 - 100
+
+   // determines a valid entry to the set
+   int validEntry( int x ) const
+   {
+      return ( x >= 0 && x <= 100 );
+   } // end function validEntry
+}; // end class IntegerSet
+
+#endif
+ 
+// Lab 7: IntegerSet.cpp
+// Member-function definitions for class IntegerSet.
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+/* Write include directive for IntegerSet.h here */
+#include "IntegerSet.h"
+// constructor creates a set from array of integers
+IntegerSet::IntegerSet( int array[], int size)
+{
+   emptySet();
+
+   for ( int i = 0; i < size; i++ )
+      insertElement( array[ i ] );
+} // end IntegerSet constructor
+
+/* Write a definition for emptySet */
+void IntegerSet::emptySet()
+{
+    for(int &i:set)
+        i = 0;//Initialized the array which called set
+}
+// input a set from the user
+void IntegerSet::inputSet()
+{
+   int number;
+
+   do
+   {
+      cout << "Enter an element (-1 to end): ";
+      cin >> number;
+
+      if ( validEntry( number ) )
+         set[ number ] = 1;
+      else if ( number != -1 )
+         cerr << "Invalid Element\n";
+   } while ( number != -1 ); // end do...while
+
+   cout << "Entry complete\n";
+} // end function inputSet
+
+// prints the set to the output stream
+void IntegerSet::printSet() const
+{
+   int x = 1;
+   bool empty = true; // assume set is empty
+
+   cout << '{';
+
+   for (int u = 0; u < 101; u++ )
+   {
+      if ( set[ u ] )
+      {
+         cout << setw( 4 ) << u << ( x % 10 == 0 ? "\n" : "" );
+         empty = false; // set is not empty
+         x++;
+      } // end if
+   } // end for
+
+   if ( empty )
+      cout << setw( 4 ) << "---"; // display an empty set
+
+   cout << setw( 4 ) << "}" << '\n';
+} // end function printSet
+
+// returns the union of two sets
+IntegerSet IntegerSet::unionOfSets( const IntegerSet &r )
+{
+   IntegerSet temp;
+
+   // if element is in either set, add to temporary set
+   for ( int n = 0; n < 101; n++ )
+      if ( set[ n ] == 1 || r.set[ n ] == 1 )
+         temp.set[ n ] = 1;
+
+   return temp;
+} // end function unionOfSets
+
+/* Write definition for intersectionOfSets */
+IntegerSet IntegerSet::intersectionOfSets( const IntegerSet &r )
+{
+    IntegerSet temp1;
+
+    for ( int n = 0; n < 101; n++ )
+        if ( set[ n ] == 1 && r.set[ n ] == 1)//If there are two identical numbers, put another array
+        temp1.set[ n ] = 1;
+
+    return temp1;
+}
+// insert a new integer into this set
+void IntegerSet::insertElement( int k )
+{
+   if ( validEntry( k ) )
+      set[ k ] = 1;
+   else
+      cerr << "Invalid insert attempted!\n";
+} // end function insertElement
+
+/* Write definition for deleteElement */
+void IntegerSet::deleteElement( int k )
+{
+    if ( validEntry( k ) )
+        set[ k ] = 0;//Zero the position of the number you want to delete
+    else
+        cerr << "Invalid insert attempted!\n";
+}
+
+// determines if two sets are equal
+bool IntegerSet::isEqualTo( const IntegerSet &r ) const
+{
+   for ( int v = 0; v < 101; v++ )
+      if ( set[ v ] != r.set[ v ] )
+         return false; // sets are not-equal
+
+   return true; // sets are equal
+} // end function isEqualTo
+ 
+// Lab 7: SetTest.cpp
+// Driver program for class IntegerSet.
+#include <iostream>
+using namespace std;
+
+#include "IntegerSet.h" // IntegerSet class definition
+
+int main()
+{
+   IntegerSet a;
+   IntegerSet b;
+   IntegerSet c;
+   IntegerSet d;
+
+   cout << "Enter set A:\n";
+   a.inputSet();
+   cout << "\nEnter set B:\n";
+   b.inputSet();
+   /* Write call to unionOfSets for object a, passing
+      b as argument and assigning the result to c */
+      c = a.unionOfSets( b );
+   /* Write call to intersectionOfSets for object a,
+      passing b as argument and assigning the result to d */
+      d = a.intersectionOfSets( b );
+   cout << "\nUnion of A and B is:\n";
+   c.printSet();
+   cout << "Intersection of A and B is:\n";
+   d.printSet();
+
+   if ( a.isEqualTo( b ) )
+      cout << "Set A is equal to set B\n";
+   else
+      cout << "Set A is not equal to set B\n";
+
+   cout << "\nInserting 77 into set A...\n";
+   a.insertElement( 77 );
+   cout << "Set A is now:\n";
+   a.printSet();
+
+   cout << "\nDeleting 77 from set A...\n";
+   a.deleteElement( 77 );
+   cout << "Set A is now:\n";
+   a.printSet();
+
+   const int arraySize = 10;
+   int intArray[ arraySize ] = { 25, 67, 2, 9, 99, 105, 45, -5, 100, 1 };
+   IntegerSet e( intArray, arraySize );
+
+   cout << "\nSet e is:\n";
+   e.printSet();
+
+   cout << endl;
+} // end main
+ 
+ 
+V  Follow-Up Questions and Activities
+	Why might it be advantageous for the set array to be allocated dynamically using new [], if the IntegerSet class were to be used for more general sets?
+
+Beacause the set array can be more convenient to find subscripts.
