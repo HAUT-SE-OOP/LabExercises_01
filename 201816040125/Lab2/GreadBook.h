@@ -1,0 +1,16 @@
+class GradeBook
+{
+public:
+   // constructor initializes course name and instructor name
+   GradeBook( string, string );
+   void setCourseName( string ); // function to set the course name
+   string getCourseName(); // function to retrieve the course name
+   /* write code to declare a get function for the instructor's name */
+   void setInstructorName( string );  //function to set the instructor's name
+   /* write code to declare a set function for the instructor's name */
+   string getInstructorName();  //function to retrieve the instructor's name
+   void displayMessage(); // display welcome message and instructor name
+private:
+   string courseName; // course name for this GradeBook
+   string instructorName; // instructor name for this GradeBook
+}; // end class GradeBook
