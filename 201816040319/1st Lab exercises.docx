@@ -1,0 +1,662 @@
+Lab Exercises
+Class:       软件1803     			Name: 周玉祥           StuID:____201816040319____________
+Date:     2019.11.11                  			Score:                      		
+Lab Exercise 1 — Modifying Class Account
+
+I  Lab Objectives
+In this lab, you will practice:
+	Creating member functions.
+	Invoking functions and receiving return values from functions.
+	Testing a condition using an if statement.
+	Outputting variables with stream insertion and the cout object.
+
+II  Description of the Problem
+Modify class Account to provide a member function called debit that withdraws money from an Account. Ensure that the debit amount does not exceed the Account’s balance. If it does, the balance should be left unchanged and the function should print a message indicating "Debit amount exceeded account balance." Modify class AccountTest to test member function debit.
+
+III  Sample Output
+ 
+IV  Your Solution
+#include <iostream>
+using namespace std;
+#include "Account.h" 
+Account::Account( int initialBalance )
+{
+   balance = 0; // assume that the balance begins at 0
+   if ( initialBalance > 0 )
+      balance = initialBalance;
+   if ( initialBalance < 0 )
+      cout << "Error: Initial balance cannot be negative.\n" << endl;
+} // end Account constructor
+void Account::credit( int amount )
+{
+   if(balance>=amount)// plus amount to balance
+    balance = balance - amount;
+   else
+     cout<<"Debit amount exceeded accout balance\n"<<"\n";
+} // end function credit
+int Account::getBalance()
+{
+   return balance; // gives the value of balance to the calling function
+} 
+class Account
+{
+public:
+   Account( int  ); // constructor initializes balance
+   void credit( int  ); // add an amount to the account balance
+   int getBalance(); // return the account balance
+private:
+   int   balance; // data member that stores the balance
+}; // end class Account
+
+// function main begins program execution
+int main()
+{
+   Account account1( 50 ); // create Account object
+   Account account2( 0 ); // create Account object
+
+   // display initial balance of each object
+   cout << "account1 balance: $" << account1.getBalance() << endl;
+   cout << "account2 balance: $" << account2.getBalance() << endl;
+
+   int withdrawalAmount; // stores withdrawal amount read from user
+
+   cout << "\nEnter withdrawal amount for account1: "; // prompt
+   cin >> withdrawalAmount; // obtain user input
+   cout << "\nsubtracting " << withdrawalAmount
+      << " from account1 balance\n\n";
+   account1.credit(withdrawalAmount);
+   cout << "account1 balance: $" << account1.getBalance() << endl;
+   cout << "account2 balance: $" << account2.getBalance() << endl;
+
+   cout << "\nEnter withdrawal amount for account2: "; // prompt
+   cin >> withdrawalAmount; // obtain user input
+   cout << "\nsubtracting " << withdrawalAmount
+      << " from account2 balance\n\n";
+   account2.credit(withdrawalAmount);
+   cout << "account1 balance: $" << account1.getBalance() << endl;
+   cout << "account2 balance: $" << account2.getBalance() << endl;
+  //延缓
+   getchar();
+   getchar();
+   return 0;
+} // end main
+ 
+ 
+Lab Exercise 2 — Modifying class GradeBook
+
+I  Lab Objectives
+In this lab, you will practice:
+	Declaring a data member.
+	Providing set and get functions to manipulate a data member’s value.
+	Declaring member functions with parameters.
+
+II  Description of the Problem
+Modify class GradeBook. Include a second string data member that represents the name of the course’s instructor. Provide a set function to change the instructor’s name and a get function to retrieve it. Modify the constructor to specify two parameters—one for the course name and one for the instructor’s name. Modify member function displayMessage such that it first outputs the welcome message and course name, then outputs "This course is presented by: " followed by the instructor’s name. Modify the test application to demonstrate the class’s new capabilities.
+
+III  Sample Output
+ 
+ 
+IV   Your Solution
+#include <string> // program uses C++ standard string class
+using namespace std;
+class GradeBook
+{
+public:
+   GradeBook( string, string );
+   void setCourseName( string ); // function to set the course name
+   string getCourseName(); // function to retrieve the course name
+   void setInstructorName(string);
+   string getlnstructorName();
+   void displayMessage(); // display welcome message and instructor name
+private:
+   string courseName; // course name for this GradeBook
+   string instructorName; // instructor name for this GradeBook
+}; // end class GradeBook
+// Lab 2: GradeBook.cpp
+// Member-function definitions for class GradeBook.
+#include "GradeBook.h"
+GradeBook::GradeBook( string course, string instructor )
+{
+   setCourseName( course ); // initializes courseName
+   setInstructorName( instructor ); // initialiZes instructorName
+} // end GradeBook constructor
+void GradeBook::setCourseName( string name )
+{
+   courseName = name; // store the course name
+} // end function setCourseName
+string GradeBook::getCourseName()
+{
+   return courseName;
+} // end function getCourseName
+void GradeBook::setInstructorName(string instructor)
+{
+    instructorName=instructor;
+}
+string GradeBook::getlnstructorName()
+ {
+     return instructorName;
+ }
+void GradeBook::displayMessage()
+{
+   cout << "Welcome to the grade book for\n" << getCourseName() << "!"
+      << endl;
+   cout << "This couse is presented by:"<<getlnstructorName()<<endl;
+} // end function displayMessage
+#include "GradeBook.h"
+int main()
+{
+   GradeBook gradeBook1(
+      "CS101 Introduction to C++ Programming","Sam smith" );
+      cout <<endl;
+      gradeBook1.displayMessage();
+GradeBook gradeBook2(
+      "CS101 Introduction to C++ Programming","judy jones" );
+      cout <<endl;
+      gradeBook2.displayMessage();
+      return 0;
+} // end main
+
+ 
+ 
+Lab Exercise 3 — Creating an Employee Class
+
+I  Lab Objectives
+In this lab, you will practice:
+	Creating a class definition.
+	Declaring data members.
+	Defining a constructor.
+	Defining set and get functions.
+	Writing a test application to demonstrate the capabilities of another class.
+
+II  Description of the Problem
+Create a class called Employee that includes three pieces of information as data members—a first name (type string), a last name (type string) and a monthly salary (type int). Your class should have a constructor that initializes the three data members. Provide a set and a get function for each data member. If the monthly salary is not positive, set it to 0. Write a test program that demonstrates class Employee’s capabilities. Create two Employee objects and display each object’s yearly salary. Then give each Employee a 10 percent raise and display each Employee’s yearly salary again.
+ 
+III  Sample Output
+ 
+ 
+IV   Your Solution
+#include <string> 
+#include <iostream>
+using namespace std;
+class Employee
+{
+public:
+   Employee (string firstname ,string lastname ,double monthlysalary );
+
+   void   setEmployeefirstname(string Fistname);
+   string  getEmployeefirstname();
+   void   setEmployeelastname(string Lastname);
+   string  getEmployeelastname();
+   void   setEmployeemonthlysalary(double salary);
+   double  getEmployeemonthlysalary();
+private:
+    string firstname ;
+    string lastname ;
+    double monthlysalary;
+};
+#include "Employee.h" // Employee class definition
+
+Employee::Employee(string firstname,string lastname,double monthlysalary)
+   {
+       setEmployeefirstname(firstname);
+       setEmployeelastname(lastname);
+       setEmployeemonthlysalary(monthlysalary);
+   }
+void Employee::setEmployeefirstname(string Firstname)
+{
+    firstname=Firstname;
+}
+string Employee::getEmployeefirstname( )
+{
+    return firstname ;
+}
+void Employee::setEmployeelastname(string Lastname)
+{
+    lastname = Lastname;
+}
+string Employee::getEmployeelastname()
+{
+    return lastname;
+}
+void Employee::setEmployeemonthlysalary(double salary)
+{
+    monthlysalary = salary;
+}
+double Employee::getEmployeemonthlysalary()
+{
+    return 12*monthlysalary;
+}
+int main()
+{
+
+    string Firstname1;
+    string Lastname1;
+    double salary1;
+
+    string Firstname2;
+    string Lastname2;
+    double salary2;
+
+   cout <<"Firstname1: ";
+   cin  >>Firstname1;
+   cout <<"Lastname1: ";
+   cin  >>Lastname1;
+   cout <<"monthlysalary1: ";
+   cin  >>salary1;
+
+   Employee employee1(Firstname1,Lastname1,salary1);
+   employee1.setEmployeefirstname(Firstname1);
+   employee1.setEmployeelastname(Lastname1);
+   employee1.setEmployeemonthlysalary(salary1);
+
+   Employee employee2(Firstname2,Lastname2,salary2);
+   employee2.setEmployeefirstname(Firstname2);
+   employee2.setEmployeelastname(Lastname2);
+   employee2.setEmployeemonthlysalary(salary2);
+
+   cout <<"Firstname2: ";
+   cin  >>Firstname2;
+   cout <<"Lastname2: ";
+   cin  >>Lastname2;
+   cout <<"monthlysalary2: ";
+   cin  >>salary2;
+
+
+   cout <<"Employee 1 "<<employee1.getEmployeefirstname()<<"      "<<employee1.getEmployeelastname()<<"      "<<employee1.getEmployeemonthlysalary()<<endl;
+   cout <<"Employee 2 "<<employee2.getEmployeefirstname()<<"      "<<employee2.getEmployeelastname()<<"      "<<employee2.getEmployeemonthlysalary()<<endl;
+
+   cout <<"employee1:"<<employee1.getEmployeefirstname()<<"        "<<employee1.getEmployeelastname()<<"      "<<employee1.getEmployeemonthlysalary()<<endl;
+   cout <<"employee2:"<<employee2.getEmployeefirstname()<<"        "<<employee2.getEmployeelastname()<<"      "<<employee2.getEmployeemonthlysalary()<<endl;
+
+   cout <<"Increasing employee salaries by 10%:"<<endl;
+
+   double a;
+   a=0.1;
+   employee1.setEmployeemonthlysalary(salary1*(a+1.0));
+   employee2.setEmployeemonthlysalary(salary2*(a+1.0));
+
+   cout <<"employee1"<<"      "<<employee1.getEmployeefirstname()<<"        "<<employee1.getEmployeelastname()<<"       "<<employee1.getEmployeemonthlysalary()<<endl;
+   cout <<"employee2"<<"      "<<employee2.getEmployeefirstname()<<"        "<<employee2.getEmployeelastname()<<"       "<<employee2.getEmployeemonthlysalary()<<endl;
+  return 0;
+} // end main
+
+ 
+ 
+Lab Exercise 4 — Complex Numbers
+
+I  Lab Objectives
+In this lab, you will practice:
+	Creating new data types by writing class definitions.
+	Defining member functions of programmer-defined classes.
+	Instantiating objects from programmer-defined classes.
+	Calling member functions of programmer-defined classes.
+The follow-up questions and activities will also give you practice:
+	Initializing programmer-defined class data members with class constructors.
+
+II  Description of the Problem
+Create a class called Complex for performing arithmetic with complex numbers. Write a program to test your class. 
+Complex numbers have the form：
+realPart + imaginaryPart * i
+where i is
+√(-1)
+Use double variables to represent the private data of the class. Provide a constructor that enables an object of this class to be initialized when it is declared. The constructor should contain default values in case no initializers are provided. Provide public member functions that perform the following tasks:
+1) Adding two Complex numbers: The real parts are added together and the imaginary parts are added together.
+2) Subtracting two Complex numbers: The real part of the right operand is subtracted from the real part of the left operand and the imaginary part of the right operand is subtracted from the imaginary part of the left operand.
+3) Printing Complex numbers in the form (a, b) where a is the real part and b is the imaginary part.
+
+III  Sample Output
+ 
+ 
+IV   Your Solution
+class Complex
+{
+public:
+    Complex(double=1,double=1);
+    Complex add( const Complex & );
+    Complex subtract( const Complex & );
+    void setComplexNumber(double,double);
+    void printComplex();
+private:
+    double realPart;
+    double imaginaryPart;
+};
+#include <iostream>
+#include "Complex.h"
+using namespace std;
+int main()
+{
+   Complex a( 1, 7 ), b( 9, 2 ), c; // create three Complex objects 
+
+   a.printComplex(); // output object a
+   cout << " + ";
+   b.printComplex(); // output object b
+   cout << " = ";
+   c = a.add( b ); // invoke add function and assign to object c
+   c.printComplex(); // output object c
+
+   cout << '\n';
+   a.setComplexNumber( 10, 1 ); // reset realPart and 
+   b.setComplexNumber( 11, 5 ); // and imaginaryPart  
+   a.printComplex(); // output object a
+   cout << " - ";
+   b.printComplex(); // output object b 
+   cout << " = ";  
+   c = a.subtract( b ); // invoke add function and assign to object c
+   c.printComplex(); // output object c
+   cout << endl;
+} // end main
+#include <iostream>
+using namespace std;
+
+#include "Complex.h"
+
+Complex::Complex( double real, double imaginary )
+{
+   setComplexNumber( real, imaginary );
+} // end Complex constructor
+
+Complex Complex::add( const Complex &right )
+{
+    Complex ad(right.realPart+realPart,right.imaginaryPart+imaginaryPart);
+    return ad;
+} // end function add
+
+Complex Complex::subtract( const Complex &right )  //subtract 减
+{
+    Complex ad(right.realPart-realPart,right.imaginaryPart-imaginaryPart);
+    return ad;
+} // end function subtract
+
+void Complex::printComplex()
+{
+   cout << '(' << realPart << ", " << imaginaryPart << ')';
+} // end function printComplex
+
+void Complex::setComplexNumber( double rp, double ip )
+{
+   realPart = rp;
+   imaginaryPart = ip;
+} // end function setComplexNumber
+
+  
+V  Follow-Up Questions and Activities
+	Why do you think const was used in the parameter list of add and subtract?
+防止调用函数时修改实参。
+	Can add and subtract’s parameters be passed by value instead of by reference? How might this affect the design of class Complex? Write a new class definition that illustrates how the parameters would be passed by value.
+	Declare a Complex number, as follows, without passing any arguments to the constructor. What happens?Does the default constructor get called?
+Complex a;
+如果类里面有自定义的构造函数并且构造函数有自定义的默认值。编译器会用自定义的默认值进行对象的初始化，不会调用默认构造函数。
+ 
+Lab Exercise 5 — Dates
+
+I  Lab Objectives
+In this lab, you will practice:
+	Using access functions and utility functions so that it is not necessary for non-member functions to be able to access a class’ data members.
+The follow-up questions and activities also will give you practice:
+	Overloading constructors and using default arguments with constructors.
+	Defining a destructor.
+
+II  Description of the Problem
+Modify the Date class to provide a member function nextDay to increment the day by one. The Date object should always remain in a consistent state. Write a program that tests function nextDay in a loop that prints the date during each iteration to illustrate that the nextDay function works correctly. Be sure to test the following cases:
+	Incrementing into the next month.
+	Incrementing into the next year.
+
+III  Sample Output
+ 
+
+IV  Your Solution
+// Lab 5: Date.h
+#ifndef DATE_H
+#define DATE_H
+
+class Date
+{
+public:
+   Date( int = 1, int = 1, int = 2000 ); // default constructor
+   void print(); // print function
+   void setDate( int, int, int ); // set month, day, year
+   void setMonth( int ); // set month
+   void setDay( int ); // set day
+   void setYear( int ); // set year
+   int getMonth(); // get month
+   int getDay(); // get day
+   int getYear(); // get year
+   void nextdays();
+
+private:
+   int month; // 1-12
+   int day; // 1-31 (except February(leap year), April, June, Sept, Nov)
+   int year; // 1900+
+   bool leapYear(); // leap year
+   int monthDays(); // days in month
+}; // end class Date
+
+#endif
+// Lab 5: Date.cpp
+// Member-function definitions for class Date.
+#include <iostream>
+using namespace std;
+
+#include "Date.h" // include definition of class Date
+
+Date::Date( int m, int d, int y )
+{
+   setDate( m, d, y ); // sets date
+} // end Date constructor
+
+void Date::setDate( int mo, int dy, int yr )
+{
+   setMonth( mo ); // invokes function setMonth
+   setDay( dy ); // invokes function setDay
+   setYear( yr ); // invokes function setYear
+} // end function setDate
+
+void Date::setDay( int d )
+{
+   if ( month == 2 && leapYear() )
+      day = ( d <= 29 && d >= 1 ) ? d : 1;
+   else
+      day = ( d <= monthDays() && d >= 1 ) ? d : 1;
+} // end function setDay
+
+void Date::setMonth( int m )
+{
+   month = m <= 12 && m >= 1 ? m : 1; // sets month
+} // end function setMonth
+
+void Date::setYear( int y )
+{
+   year = y >= 1900 ? y : 1900; // sets year
+} // end function setYear
+
+int Date::getDay()
+{
+   return day;
+} // end function getDay
+
+int Date::getMonth()
+{
+   return month;
+} // end function getMonth
+
+int Date::getYear()
+{
+   return year;
+} // end function getYear
+
+void Date::print()
+{
+   cout << month << '-' << day << '-' << year << '\n'; // outputs date
+} // end function print
+void Date::nextdays()
+{
+   if(day == monthDays())
+   {
+       if(month==12)
+       {
+           setYear(year+1);
+       }
+       setMonth(month+1);
+   }
+   setDay(day+1);
+}
+
+bool Date::leapYear()
+{
+   if ( getYear() % 400 == 0 || ( getYear() % 4 == 0 && getYear() % 100 != 0 ) )
+         return true; // is a leap year
+      else
+         return false; // is not a leap year
+} // end function leapYear
+
+int Date::monthDays()
+{
+   const int days[ 12 ] =
+     { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+   return getMonth() == 2 && leapYear() ? 29 : days[ getMonth() - 1 ];
+} // end function monthDays
+// Lab 5: DateTest.cpp
+#include <iostream>
+using namespace std;
+
+#include "Date.h" // include definitions of class Date
+
+int main()
+{
+   const int MAXDAYS = 16;
+   Date d( 12, 24, 2004 ); // instantiate object d of class Date
+
+   // output Date object d's value
+   for ( int loop = 1; loop <= MAXDAYS; ++loop )
+   {
+      d.print(); // invokes function print
+      d.nextdays();
+      /* Write call to nextDay */
+   } // end for
+
+   cout << endl;
+} // end main
+
+ 
+ 
+V  Follow-Up Questions and Activities
+	The Date class has only one constructor. Is it possible to have more than one constructor?
+构造函数可以重载，所以可以有多个。
+	What happens when a member function that takes no arguments is called without the parentheses (i.e.,dateObject.nextDay)?
+发生编译错误
+	Write a destructor for the Date class. The destructor should print text indicating that the destructor for the Date class was called successfully.
+~Date
+{
+    Cout<<”destroy date”<<endl
+}
+	In main, try to change d’s year to 2003 using an assignment statement. Do not call function setYear. What happens? Are you able to change the value?
+会发生编译错误，不能从外部改变对象的私有数据
+ 
+
+Lab Exercise 6 — Simple Calculator
+
+I  Lab Objectives
+In this lab, you will practice:
+	Using classes to create a data type Simple Calculator capable of performing arithmetic operations.
+	Creating const member functions to enforce the principle of least privilege.
+The follow-up questions and activities also will give you practice:
+	Using constructors to specify initial values for data members of a programmer-defined class.
+
+II  Description of the Problem
+Write a SimpleCalculator class that has public methods for adding, subtracting, multiplying and dividing two doubles. A sample call is as follows:
+double answer = sc.add( a, b );
+Object sc is of type SimpleCalculator. Member function add returns the result of adding its two arguments.
+
+III  Sample Output
+ 
+ 
+IV Your Solution
+// Lab Exercise 6: SimpleCalculator.h
+
+// class SimpleCalculator definition
+class SimpleCalculator
+{
+class:
+
+       double addintion()const;
+       double subtract()const;
+       double multiply()const;
+       double divide()const;
+
+public:
+   /* Write prototype for add member function */
+   double addition(double,double) const;
+   double subtract( double, double ) const;
+   double multiply( double, double ) const;
+   double divide(double,double) const;
+   /* Write prototype for divide member function */
+}; // end class SimpleCalculator
+// Lab Exercise 6: SimpleCalculator.cpp
+
+#include "SimpleCalculator.h"
+
+/* Write definition for add member function */
+double SmipleCalculator::addintion(double a ,double b)
+{
+    return a+b;
+}
+
+// function subtract definition
+double SimpleCalculator::subtract( double a, double b ) const
+{
+   return a - b;
+} // end function subtract
+
+// function multiply definition
+double SimpleCalculator::multiply( double a, double b ) const
+{
+   return a * b;
+} // end function multiply
+
+/* Write definition for divide member function */
+double SimpleCalculator::divide(double a,double b)const
+{
+    return a/b;
+}
+// Lab Exercise 6: CalcTest.cpp
+
+#include <iostream>
+using namespace std; 
+
+#include "SimpleCalculator.h"
+
+int main()
+{
+
+   double a = 10.0;
+   double b = 20.0;
+
+   /* Instantiate an object of type Simplecalculator */
+   cout << "The value of a is: " << a << "\n";
+   cout << "The value of b is: " << b << "\n\n";
+   
+   /* Write a line that adds a and b through your SimpleCalculator
+      object; assign the result to a variable named addition */
+   cout << "Adding a and b yields " << addition << "\n";
+
+   double subtraction = sc.subtract( a, b );
+   cout << "Subtracting b from a yields " << subtraction << "\n";
+
+   double multiplication = sc.multiply( a, b );
+   cout << "Multiplying a by b yields " << multiplication << "\n";
+    
+   /* Write a line that divides a and b through the
+      SimpleCalculator object; assign the result to a
+	  variable named division */
+   cout << "Dividing a by b yields " << division << endl;
+}
+
+ 
+V  Follow-Up Questions and Activities
+	Why doesn’t the SimpleCalculator class have a constructor?
+	Why are no private data members needed for class SimpleCalculator?
+	Modify your class so that SimpleCalculator has a private data member called answer. After performing an operation, assign the result to answer. Add a member function named getAnswer to retrieve the result of the last arithmetic operation performed by the object. Also, add a constructor for class SimpleCalculator that initializes the value of answer to 0.
+	Modify the program so that the SimpleCalculator class has an input member function that allows the user to input two doubles. The function should then store the values that were input in private data members. Use these two values for each of the arithmetic calculations. Create two constructors for this class, one that takes no arguments and initializes a and b to 0 and another that takes two doubles and initializes a and b to those values. Finally, create a member function printValues that displays the values of a and b. A segment of the driver program might now look like this:
+ 
+ 
