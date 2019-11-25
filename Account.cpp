@@ -1,3 +1,5 @@
+// Lab 1: Account.cpp
+// Member-function definitions for class Account.
 #include <iostream>
 using namespace std;
 
@@ -24,20 +26,20 @@ void Account::credit( int amount )
    balance = balance + amount; // add amount to balance
 } // end function credit
 
-/* write code to define member function debit. */
-void Account::debit(int withdrawalAmount )
+void Account::debit(int amount )
 {
-    if(balance>withdrawalAmount||balance==withdrawalAmount)    //Verify data validity
-        balance=balance-withdrawalAmount;
-    if(balance<withdrawalAmount)
-        cout<<"Debit amount exceeded account balance."<<endl;
+    if(amount<=balance){
+        balance=balance-amount;//if amount<=balance then withdraw the money
+    }
+    else{
+        cout<<"Debit amount exceeded account balance." <<endl;//feedback error information
+    }
+}//end function debit
 
-}
 
 
 // return the account balance
 int Account::getBalance()
 {
-
    return balance; // gives the value of balance to the calling function
 } // end function getBalance
